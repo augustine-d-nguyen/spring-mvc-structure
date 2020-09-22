@@ -1,0 +1,84 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://java.sun.com/xml/ns/javaee"
+            xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                                http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+            id="probation_test" version="2.5">
+  <display-name>online_mobile_shop</display-name>
+  
+  <!-- declare spring mvc dispatcher START -->
+  <servlet>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>WEB-INF/context/web-dispatcher-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- declare spring mvc dispatcher E.N.D -->
+    
+    <!-- declare root url handled by spring mvc dispatcher START -->
+    <servlet-mapping>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- declare root url handled by spring mvc dispatcher START -->
+    
+    <!-- declare controllers config location START -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/context/backend-jpa-context.xml,
+            /WEB-INF/context/web-spring-security.xml
+        </param-value>
+    </context-param>
+    <!-- declare controllers config location E.N.D -->
+    
+    <!-- context loader START -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- context loader E.N.D -->
+    <!-- session listener START -->
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+    <!-- session listener E.N.D -->
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
+    
+    <!-- spring security START -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+ 
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- spring security E.N.D -->
+    
+    <!-- encode url - START -->
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- encode url - E.N.D -->
+    
+    <!-- welcome file START -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <!-- welcome file E.N.D -->
+</web-app>
